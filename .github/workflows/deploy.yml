@@ -41,6 +41,19 @@ jobs:
       - name: Deploy to Amazon S3
         run: aws s3 sync dist/ "s3://${{ secrets.S3_BUCKET_NAME }}" --delete
 
+      - name: Deploy to Amplify Hosting
+        env:
+          AMPLIFY_APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
+        run: |
+          cd dist
+          zip -r ../website.zip .
+          DEPLOY=$(aws amplify create-deployment --app-id "$AMPLIFY_APP_ID" --branch-name main --output json)
+          JOB_ID=$(echo "$DEPLOY" | jq -r .jobId)
+          UPLOAD_URL=$(echo "$DEPLOY" | jq -r .zipUploadUrl)
+          curl -sS --request PUT -T ../website.zip -H "Content-Type: application/zip" "$UPLOAD_URL"
+          aws amplify start-deployment --app-id "$AMPLIFY_APP_ID" --branch-name main --job-id "$JOB_ID"
+          echo "Published URL: https://main.${AMPLIFY_APP_ID}.amplifyapp.com"
+
       - name: Invalidate CloudFront cache
         env:
           CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}

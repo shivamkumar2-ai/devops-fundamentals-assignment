@@ -43,9 +43,9 @@ Follow `docs/q2-cicd-setup.md` to:
 3. Add GitHub Actions secrets
 4. Push to `main` so the pipeline deploys automatically
 
-Submit the CloudFront URL, for example:
+Public URL (Amplify Hosting, CloudFront-backed):
 
-`https://d111111abcdef8.cloudfront.net`
+https://main.d1kzcf2uu5risc.amplifyapp.com
 
 ## Local test
 
