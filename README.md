@@ -23,9 +23,9 @@ Create the VPC, subnet, Internet Gateway, route table, security group, EC2 insta
 
 Follow `docs/q1-aws-console-guide.md` and serve `q1-ec2-nginx/index.html`.
 
-Submit the ALB URL, for example:
+Public ALB URL:
 
-`http://my-application-alb-123456789.ap-south-1.elb.amazonaws.com`
+http://devops-q1-alb-1983041665.ap-south-1.elb.amazonaws.com
 
 ## Question 2
 
